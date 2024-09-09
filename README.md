@@ -1,4 +1,5 @@
-# tauri_includedir
+tauri_includedir
+===========
 
 ## Deprecation notice
 
@@ -6,22 +7,19 @@ This crate was deprecated. It is now part of the `tauri-codegen` crate.
 
 # tauri-includedir
 
-Include a directory in your Rust binary, e.g. static files for your web server
-or assets for your game.
+Include a directory in your Rust binary, e.g. static files for your web server or assets for your game.
 
 ## Features
 
--   [x] Automatically compile data into binary
--   [x] Use [rust-phf](https://github.com/sfackler/rust-phf) for efficient
-        lookup
--   [x] Wrapping API around the phf map, to abstract away additional features
--   [x] Compression, with optional crate "flate2"
--   [x] Reading from source files for debug builds
+* [x] Automatically compile data into binary
+* [x] Use [rust-phf](https://github.com/sfackler/rust-phf) for efficient lookup
+* [x] Wrapping API around the phf map, to abstract away additional features
+* [x] Compression, with optional crate "flate2"
+* [x] Reading from source files for debug builds
 
 ## Example
 
 **Cargo.toml**
-
 ```toml
 [package]
 name = "example"

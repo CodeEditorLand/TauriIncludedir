@@ -1,2 +1,6 @@
 [workspace]
-members = ["codegen", "example", "lib"]
+members = [
+    "codegen",
+    "example",
+    "lib",
+]

@@ -1,13 +1,13 @@
 [package]
 name = "tauri_includedir_codegen"
 description = "This crate was deprecated. It is now part of the `tauri-codegen` crate."
-keywords = ["include", "tree", "directory", "build", "static"]
-categories = ["filesystem"]
+keywords = [ "include", "tree", "directory", "build", "static" ]
+categories = [ "filesystem" ]
 version = "0.6.3"
-authors = ["Till Höppner <till@hoeppner.ws>"]
+authors = [ "Till Höppner <till@hoeppner.ws>" ]
 license = "BSD-3-Clause"
 homepage = "https://github.com/tilpner/includedir"
-repository = "HTTPS://GitHub.Com/tilpner/includedir"
+repository = "https://github.com/tilpner/includedir"
 documentation = "https://docs.rs/includedir_codegen"
 readme = "../README.md"
 edition = "2018"
