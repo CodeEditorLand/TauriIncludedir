@@ -28,13 +28,9 @@ fn as_key(path:&str) -> Cow<str> { Cow::Owned(path.replace("\\", "/")) }
 fn as_key(path:&str) -> Cow<str> { Cow::Borrowed(path) }
 
 impl Files {
-	pub fn file_names(&'static self) -> FileNames {
-		FileNames { iter:self.files.keys() }
-	}
+	pub fn file_names(&'static self) -> FileNames { FileNames { iter:self.files.keys() } }
 
-	pub fn is_available(&self, path:&str) -> bool {
-		self.files.contains_key(path)
-	}
+	pub fn is_available(&self, path:&str) -> bool { self.files.contains_key(path) }
 
 	pub fn get(&self, path:&str) -> io::Result<Cow<'static, [u8]>> {
 		match self.get_raw(path) {
@@ -50,10 +46,7 @@ impl Files {
 		}
 	}
 
-	pub fn get_raw(
-		&self,
-		path:&str,
-	) -> io::Result<(Compression, Cow<'static, [u8]>)> {
+	pub fn get_raw(&self, path:&str) -> io::Result<(Compression, Cow<'static, [u8]>)> {
 		let key = as_key(path);
 
 		self.files
