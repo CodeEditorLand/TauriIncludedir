@@ -60,6 +60,7 @@ impl IncludeDir {
 	/// panic!.
 	pub fn file<P:AsRef<Path>>(mut self, path:P, comp:Compression) -> IncludeDir {
 		self.add_file(path, comp).unwrap();
+
 		self
 	}
 
@@ -68,6 +69,7 @@ impl IncludeDir {
 	/// This function panics when CARGO_MANIFEST_DIR or OUT_DIR are not defined.
 	pub fn add_file<P:AsRef<Path>>(&mut self, path:P, comp:Compression) -> io::Result<()> {
 		let key = path.as_ref().to_string_lossy();
+
 		println!("cargo:rerun-if-changed={}", path.as_ref().display());
 
 		match comp {
@@ -78,11 +80,15 @@ impl IncludeDir {
 			Compression::Gzip => {
 				// gzip encode file to OUT_DIR
 				let in_path = self.manifest_dir.join(&path);
+
 				let mut in_file = BufReader::new(File::open(&in_path)?);
 
 				let out_path = Path::new(&env::var("OUT_DIR").unwrap()).join(&path);
+
 				fs::create_dir_all(&out_path.parent().unwrap())?;
+
 				let out_file = BufWriter::new(File::create(&out_path)?);
+
 				let mut encoder = GzEncoder::new(out_file, flate2::Compression::best());
 
 				io::copy(&mut in_file, &mut encoder)?;
@@ -90,6 +96,7 @@ impl IncludeDir {
 				self.files.insert(as_key(key.borrow()).into_owned(), (comp, out_path));
 			},
 		}
+
 		Ok(())
 	}
 
@@ -97,6 +104,7 @@ impl IncludeDir {
 	/// This function calls `file`, and therefore will panic! on missing files.
 	pub fn dir<P:AsRef<Path>>(mut self, path:P, comp:Compression) -> IncludeDir {
 		self.add_dir(path, comp).unwrap();
+
 		self
 	}
 
@@ -112,11 +120,13 @@ impl IncludeDir {
 				_ => (),
 			}
 		}
+
 		Ok(())
 	}
 
 	pub fn build(self, out_name:&str, filter:Vec<String>) -> io::Result<()> {
 		let out_path = Path::new(&env::var("OUT_DIR").unwrap()).join(out_name);
+
 		let mut out_file = BufWriter::new(File::create(&out_path)?);
 
 		writeln!(&mut out_file, "#[allow(clippy::unreadable_literal, missing_docs)]")?;
@@ -128,6 +138,7 @@ impl IncludeDir {
 		)?;
 
 		let mut map:phf_codegen::Map<&str> = phf_codegen::Map::new();
+
 		let entries:Vec<_> = self
 			.files
 			.iter()
@@ -140,6 +151,7 @@ impl IncludeDir {
 		for (name, (compression, include_path)) in &entries {
 			if !filter.iter().any(|value| include_path.ends_with(value)) {
 				let include_path = format!("{}", self.manifest_dir.join(include_path).display());
+
 				map.entry(
 					name,
 					&format!(
@@ -152,6 +164,7 @@ impl IncludeDir {
 		}
 
 		writeln!(&mut out_file, "{}}};", map.build())?;
+
 		Ok(())
 	}
 }

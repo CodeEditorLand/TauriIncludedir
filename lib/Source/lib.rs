@@ -38,8 +38,11 @@ impl Files {
 			#[cfg(feature = "flate2")]
 			Ok((Compression::Gzip, compressed)) => {
 				let mut r = GzDecoder::new(Cursor::new(compressed));
+
 				let mut v = Vec::new();
+
 				r.read_to_end(&mut v)?;
+
 				Ok(Cow::Owned(v))
 			},
 			Err(e) => Err(e),
@@ -57,6 +60,7 @@ impl Files {
 
 	pub fn read(&self, path:&str) -> io::Result<Box<dyn Read>> {
 		let key = as_key(path);
+
 		match self.files.get(key.borrow() as &str) {
 			Some(b) => {
 				match b.0 {
