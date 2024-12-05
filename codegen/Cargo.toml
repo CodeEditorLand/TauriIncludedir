@@ -16,6 +16,6 @@ edition = "2018"
 maintenance = { status = "deprecated" }
 
 [dependencies]
-walkdir = "2.2"
-phf_codegen = "0.8.0"
-flate2 = "1.0"
+walkdir = { version = "2.2" }
+phf_codegen = { version = "0.8.0" }
+flate2 = { version = "1.0" }

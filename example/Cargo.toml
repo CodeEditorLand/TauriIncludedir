@@ -8,7 +8,7 @@ publish = false
 edition = "2018"
 
 [dependencies]
-phf = "0.8.0"
+phf = { version = "0.8.0" }
 tauri_includedir = { path = "../lib" }
 
 [build-dependencies]
